@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raising Scholars | Elliot Ngosa — Educator · Researcher · Creator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --cream:       #F7EDD8;
+      --parchment:   #EDE0C2;
+      --terracotta:  #C4622D;
+      --terra-dark:  #9E4A1E;
+      --ochre:       #D4922A;
+      --forest:      #3A5C32;
+      --espresso:    #1C0D05;
+      --warm-mid:    #6B4F35;
+      --warm-light:  #A6896A;
+      --white:       #FDFAF4;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--espresso);
+      font-family: 'Lora', Georgia, serif;
+      font-size: 17px;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 4rem;
+      background: transparent;
+      transition: background 0.4s, box-shadow 0.4s, padding 0.3s;
+    }
+    nav.scrolled {
+      background: var(--espresso);
+      box-shadow: 0 2px 30px rgba(28,13,5,0.25);
+      padding: 0.9rem 4rem;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+    nav.scrolled .nav-logo { color: var(--ochre); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(253,250,244,0.8);
+      text-decoration: none;
+      transition: opacity 0.2s, color 0.2s;
+    }
+    .nav-links a:hover { color: var(--ochre); opacity: 1; }
+    .nav-mobile { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+    .nav-mobile span { width: 24px; height: 2px; background: var(--white); display: block; transition: 0.3s; }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      background: var(--espresso);
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .hero-geo {
+      position: absolute;
+      right: -60px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 560px;
+      height: 560px;
+      opacity: 0.1;
+    }
+    .hero-geo-sm {
+      position: absolute;
+      left: -30px;
+      bottom: 80px;
+      width: 200px;
+      height: 200px;
+      opacity: 0.06;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 9rem 4rem 6rem;
+      max-width: 800px;
+    }
+    .hero-eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--ochre);
+      margin-bottom: 1.6rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.2s forwards;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 40px; height: 1px;
+      background: var(--ochre);
+    }
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.8rem, 7.5vw, 7rem);
+      font-weight: 300;
+      line-height: 1.0;
+      color: var(--white);
+      margin-bottom: 0.25em;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.4s forwards;
+    }
+    .hero-name em { font-style: italic; color: var(--terracotta); }
+    .hero-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 2vw, 1.45rem);
+      font-style: italic;
+      color: var(--warm-light);
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.6s forwards;
+    }
+    .hero-bio {
+      font-size: 0.98rem;
+      line-height: 1.9;
+      color: rgba(253,250,244,0.65);
+      max-width: 540px;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.8s forwards;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 1s forwards;
+    }
+    .btn-primary {
+      background: var(--terracotta);
+      color: var(--white);
+      padding: 0.9rem 2.4rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 2px solid var(--terracotta);
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: transparent; color: var(--terracotta); transform: translateY(-2px); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--warm-light);
+      padding: 0.9rem 2.4rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 2px solid rgba(166,137,106,0.5);
+      transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-secondary:hover { background: var(--warm-light); color: var(--espresso); border-color: var(--warm-light); transform: translateY(-2px); }
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem; left: 4rem;
+      display: flex; align-items: center; gap: 0.8rem;
+      color: rgba(166,137,106,0.6);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeIn 1s ease 1.5s forwards;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+    }
+    .hero-scroll::after {
+      content: '';
+      width: 1px; height: 50px;
+      background: var(--warm-light);
+      animation: scrollBob 2s ease-in-out infinite;
+    }
+
+    /* ─── SECTION COMMON ─── */
+    section { padding: 7rem 4rem; }
+    .section-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .section-label::before { content: ''; width: 28px; height: 1px; background: var(--terracotta); }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 500;
+      line-height: 1.12;
+      color: var(--espresso);
+      margin-bottom: 1.8rem;
+    }
+    .section-title em { font-style: italic; color: var(--terracotta); }
+
+    /* ─── ABOUT ─── */
+    #about {
+      background: var(--white);
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 7rem;
+      align-items: center;
+    }
+    .about-visual { position: relative; }
+    .about-frame {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--parchment);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .about-monogram {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10rem;
+      font-weight: 300;
+      color: var(--terracotta);
+      opacity: 0.12;
+      letter-spacing: 0.2em;
+      user-select: none;
+    }
+    .about-add-photo {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      background: rgba(28,13,5,0.6);
+      color: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      padding: 0.4rem 0.8rem;
+      text-transform: uppercase;
+    }
+    .about-frame-border {
+      position: absolute;
+      bottom: -20px; right: -20px;
+      width: 100%; height: 100%;
+      border: 2px solid var(--terracotta);
+      z-index: -1;
+    }
+    .about-badge {
+      position: absolute;
+      bottom: -16px; left: -16px;
+      background: var(--terracotta);
+      color: var(--white);
+      padding: 1.3rem 1.5rem;
+      text-align: center;
+    }
+    .about-badge strong { display: block; font-size: 2.2rem; font-weight: 700; font-family: 'Cormorant Garamond', serif; line-height: 1; }
+    .about-badge span { font-family: 'DM Sans', sans-serif; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.9; }
+    .about-text p { font-size: 0.98rem; color: var(--warm-mid); margin-bottom: 1.2rem; line-height: 1.9; }
+    .about-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; }
+    .tag {
+      background: var(--cream);
+      border: 1px solid var(--parchment);
+      padding: 0.35rem 0.9rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--warm-mid);
+      text-transform: uppercase;
+    }
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--parchment);
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+    }
+    .stat { text-align: center; padding: 0 0.8rem; border-right: 1px solid var(--parchment); }
+    .stat:last-child { border-right: none; }
+    .stat strong {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 600;
+      color: var(--terracotta);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .stat span {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--warm-light);
+      line-height: 1.5;
+    }
+
+    /* ─── ARTICLES ─── */
+    #articles { background: var(--cream); }
+    .articles-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 4rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+    }
+    .article-card {
+      background: var(--white);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .article-card:hover { transform: translateY(-7px); box-shadow: 0 24px 60px rgba(28,13,5,0.1); }
+    .article-card.featured { grid-column: span 2; }
+    .card-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .article-card.featured .card-thumb { aspect-ratio: 21/9; }
+    .card-category {
+      position: absolute;
+      top: 1.2rem; left: 1.2rem;
+      background: var(--terracotta);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+    }
+    .card-thumb-deco {
+      opacity: 0.25;
+    }
+    .card-body { padding: 1.8rem; }
+    .card-meta {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.68rem;
+      color: var(--warm-light);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.7rem;
+    }
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--espresso);
+      margin-bottom: 0.8rem;
+    }
+    .article-card.featured .card-title { font-size: 1.85rem; }
+    .card-excerpt {
+      font-size: 0.88rem;
+      color: var(--warm-mid);
+      line-height: 1.8;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.3rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      text-decoration: none;
+      transition: gap 0.2s;
+    }
+    .card-link::after { content: '→'; }
+    .card-link:hover { gap: 0.9rem; }
+
+    /* ─── TOPICS ─── */
+    #topics { background: var(--espresso); padding: 6rem 4rem; }
+    #topics .section-label { color: var(--ochre); }
+    #topics .section-label::before { background: var(--ochre); }
+    #topics .section-title { color: var(--white); }
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+    .topic-card {
+      border: 1px solid rgba(253,250,244,0.1);
+      padding: 1.8rem 1.5rem;
+      transition: border-color 0.25s, background 0.25s;
+      cursor: default;
+    }
+    .topic-card:hover { border-color: var(--terracotta); background: rgba(196,98,45,0.07); }
+    .topic-icon { font-size: 1.8rem; display: block; margin-bottom: 1rem; }
+    .topic-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+    }
+    .topic-desc {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.76rem;
+      color: rgba(253,250,244,0.45);
+      line-height: 1.65;
+    }
+
+    /* ─── RESOURCES ─── */
+    #resources { background: var(--parchment); }
+    .resources-lead { max-width: 580px; margin-bottom: 4rem; }
+    .resources-lead p { color: var(--warm-mid); font-size: 0.98rem; line-height: 1.9; }
+    .resources-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 2.5rem; }
+    .resource-card {
+      background: var(--white);
+      padding: 2rem;
+      border-bottom: 3px solid transparent;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+      cursor: pointer;
+    }
+    .resource-card:hover { border-color: var(--terracotta); transform: translateY(-5px); box-shadow: 0 16px 40px rgba(28,13,5,0.08); }
+    .resource-type {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ochre);
+      margin-bottom: 0.9rem;
+    }
+    .resource-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--espresso);
+      margin-bottom: 0.7rem;
+      line-height: 1.35;
+    }
+    .resource-desc { font-size: 0.86rem; color: var(--warm-mid); line-height: 1.75; }
+    .resource-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 1.3rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+    }
+    .resource-cta::after { content: '→'; }
+
+    .gumroad-banner {
+      background: var(--terracotta);
+      padding: 3.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .gumroad-banner p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      font-style: italic;
+      color: var(--white);
+      max-width: 480px;
+      line-height: 1.4;
+    }
+    .btn-gumroad {
+      background: var(--espresso);
+      color: var(--white);
+      padding: 1rem 2.8rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-gumroad:hover { background: var(--cream); color: var(--espresso); transform: translateY(-2px); }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      background: var(--white);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7rem;
+      align-items: start;
+    }
+    .contact-info p { color: var(--warm-mid); font-size: 0.98rem; line-height: 1.9; margin-bottom: 2rem; }
+    .contact-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--parchment);
+    }
+    .contact-detail-icon { font-size: 1rem; margin-top: 2px; }
+    .contact-detail-text { font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--espresso); line-height: 1.5; }
+    .contact-detail-label { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-light); margin-bottom: 0.2rem; }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--warm-mid);
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: var(--cream);
+      border: 1px solid var(--parchment);
+      border-radius: 0;
+      padding: 0.9rem 1.1rem;
+      font-family: 'Lora', serif;
+      font-size: 0.93rem;
+      color: var(--espresso);
+      outline: none;
+      appearance: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { border-color: var(--terracotta); }
+    .form-group textarea { min-height: 140px; resize: vertical; }
+    .btn-submit {
+      background: var(--terracotta);
+      color: var(--white);
+      border: none;
+      padding: 1rem 2.6rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      align-self: flex-start;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-submit:hover { background: var(--terra-dark); transform: translateY(-2px); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--espresso);
+      padding: 3rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 2rem;
+    }
+    .footer-brand .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--ochre);
+      letter-spacing: 0.03em;
+    }
+    .footer-brand .footer-sub {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 0.82rem;
+      color: rgba(253,250,244,0.35);
+      margin-top: 0.2rem;
+    }
+    .footer-links { display: flex; gap: 2rem; list-style: none; justify-content: center; flex-wrap: wrap; }
+    .footer-links a {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(253,250,244,0.4);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--ochre); }
+    .footer-copy {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.68rem;
+      color: rgba(253,250,244,0.25);
+      text-align: right;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes scrollBob {
+      0%, 100% { transform: scaleY(0.5); opacity: 0.4; }
+      50%       { transform: scaleY(1); opacity: 1; }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1100px) {
+      #about { grid-template-columns: 340px 1fr; gap: 4rem; }
+      .topics-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 900px) {
+      section { padding: 5rem 2rem; }
+      nav { padding: 1rem 2rem; }
+      nav.scrolled { padding: 0.8rem 2rem; }
+      .nav-links { display: none; }
+      .nav-mobile { display: flex; }
+      #about { grid-template-columns: 1fr; }
+      .about-visual { max-width: 340px; }
+      .articles-grid { grid-template-columns: 1fr; }
+      .article-card.featured { grid-column: span 1; }
+      .resources-grid { grid-template-columns: 1fr; }
+      #contact { grid-template-columns: 1fr; gap: 4rem; }
+      footer { grid-template-columns: 1fr; text-align: center; padding: 2.5rem 2rem; }
+      .footer-copy { text-align: center; }
+      .footer-links { justify-content: center; }
+      .hero-content { padding: 7rem 2rem 5rem; }
+      .hero-scroll { left: 2rem; }
+      .gumroad-banner { justify-content: center; text-align: center; padding: 2.5rem 2rem; }
+      #topics { padding: 5rem 2rem; }
+      .topics-grid { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#" class="nav-logo">Raising Scholars</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#articles">Articles</a></li>
+      <li><a href="#topics">Topics</a></li>
+      <li><a href="#resources">Resources</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-mobile" onclick="toggleMenu(this)">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <!-- Large geometric pattern right -->
+    <svg class="hero-geo" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="10" y="10" width="480" height="480" stroke="#D4922A" stroke-width="2"/>
+      <rect x="50" y="50" width="400" height="400" stroke="#C4622D" stroke-width="1.5"/>
+      <rect x="90" y="90" width="320" height="320" stroke="#D4922A" stroke-width="1"/>
+      <line x1="10" y1="10" x2="250" y2="250" stroke="#D4922A" stroke-width="1.5"/>
+      <line x1="490" y1="10" x2="250" y2="250" stroke="#D4922A" stroke-width="1.5"/>
+      <line x1="10" y1="490" x2="250" y2="250" stroke="#D4922A" stroke-width="1.5"/>
+      <line x1="490" y1="490" x2="250" y2="250" stroke="#D4922A" stroke-width="1.5"/>
+      <circle cx="250" cy="250" r="100" stroke="#C4622D" stroke-width="2"/>
+      <circle cx="250" cy="250" r="160" stroke="#D4922A" stroke-width="1"/>
+      <circle cx="250" cy="250" r="220" stroke="#C4622D" stroke-width="0.8"/>
+      <polygon points="250,70 430,320 70,320" stroke="#D4922A" stroke-width="1.5" fill="none"/>
+      <polygon points="250,430 70,180 430,180" stroke="#C4622D" stroke-width="1.5" fill="none"/>
+      <!-- Corner diamonds -->
+      <path d="M250 10 L265 25 L250 40 L235 25 Z" stroke="#D4922A" stroke-width="1" fill="none"/>
+      <path d="M250 460 L265 475 L250 490 L235 475 Z" stroke="#D4922A" stroke-width="1" fill="none"/>
+      <path d="M10 250 L25 265 L40 250 L25 235 Z" stroke="#D4922A" stroke-width="1" fill="none"/>
+      <path d="M460 250 L475 265 L490 250 L475 235 Z" stroke="#D4922A" stroke-width="1" fill="none"/>
+    </svg>
+    <!-- Small geometric left-bottom -->
+    <svg class="hero-geo-sm" viewBox="0 0 200 200" fill="none">
+      <circle cx="100" cy="100" r="90" stroke="#D4922A" stroke-width="1.5"/>
+      <circle cx="100" cy="100" r="60" stroke="#C4622D" stroke-width="1"/>
+      <line x1="10" y1="100" x2="190" y2="100" stroke="#D4922A" stroke-width="1"/>
+      <line x1="100" y1="10" x2="100" y2="190" stroke="#D4922A" stroke-width="1"/>
+      <polygon points="100,20 170,155 30,155" stroke="#C4622D" stroke-width="1" fill="none"/>
+    </svg>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">Educator · Researcher · Creator</p>
+      <h1 class="hero-name">Raising<br><em>Scholars</em></h1>
+      <p class="hero-tagline">Raising Scholars. Building Schools. Shaping the Future of African Education.</p>
+      <p class="hero-bio">
+        <strong style="color: var(--ochre);">Raising Scholars</strong> is the platform of Elliot Ngosa — School Support Officer at PEAS Zambia, Art & Design Specialist, and postgraduate researcher pursuing dual Master's degrees in Educational Research and School Administration. Over a decade of transforming classrooms and school systems across Zambia — shared here.
+      </p>
+      <div class="hero-ctas">
+        <a href="#articles" class="btn-primary">Read Articles</a>
+        <a href="#resources" class="btn-secondary">Browse Resources</a>
+      </div>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-visual reveal">
+      <div class="about-frame">
+        <div class="about-monogram">RS</div>
+        <div class="about-add-photo">📷 Add your photo here</div>
+      </div>
+      <div class="about-frame-border"></div>
+      <div class="about-badge">
+        <strong>8+</strong>
+        <span>Years in<br>Education</span>
+      </div>
+    </div>
+    <div class="about-text">
+      <p class="section-label">About Me</p>
+      <h2 class="section-title">From the Classroom<br>to the <em>Cluster</em></h2>
+      <p>I'm Elliot Ngosa — the educator and researcher behind <strong>Raising Scholars</strong>. Based in Lusaka, Zambia 🇿🇲, my work sits at the intersection of instructional quality, teacher development, and education systems strengthening in resource-constrained environments.</p>
+      <p>As a School Support Officer at <strong>PEAS (Providing Equality in African Schools)</strong>, I work directly with secondary schools in the South-East Cluster, supporting headteachers and teachers to build high-performing school environments. Before this, I spent years in the classroom as an Art & Design Specialist, implementing the Cambridge curriculum — and learning as much as I taught.</p>
+      <p>I'm currently pursuing dual Master's degrees in <strong>Educational Research</strong> (TECH Global University) and <strong>Education Administration & Management</strong> (UNICAF University). Everything I write here is grounded in both lived field practice and rigorous academic inquiry.</p>
+      <div class="about-tags">
+        <span class="tag">Instructional Quality</span>
+        <span class="tag">Teacher Development</span>
+        <span class="tag">School Systems</span>
+        <span class="tag">Cambridge Curriculum</span>
+        <span class="tag">EdResearch</span>
+        <span class="tag">PEAS Zambia</span>
+      </div>
+      <div class="about-stats">
+        <div class="stat">
+          <strong>2</strong>
+          <span>Master's<br>In Progress</span>
+        </div>
+        <div class="stat">
+          <strong>5K+</strong>
+          <span>Learners<br>Reached</span>
+        </div>
+        <div class="stat">
+          <strong>10+</strong>
+          <span>Years of<br>Experience</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTICLES -->
+  <section id="articles">
+    <div class="articles-header reveal">
+      <div>
+        <p class="section-label">Latest Writing</p>
+        <h2 class="section-title">From the <em>Field</em></h2>
+      </div>
+      <a href="#articles" class="card-link" style="color: var(--terracotta);">View All Articles</a>
+    </div>
+
+    <div class="articles-grid">
+      <!-- Featured article -->
+      <div class="article-card featured reveal">
+        <div class="card-thumb" style="background: linear-gradient(135deg, #1C0D05 0%, #3A5C32 70%, #1C0D05 100%);">
+          <svg class="card-thumb-deco" width="120" height="120" viewBox="0 0 120 120" fill="none">
+            <circle cx="60" cy="60" r="50" stroke="#D4922A" stroke-width="1.5"/>
+            <circle cx="60" cy="60" r="30" stroke="#C4622D" stroke-width="1"/>
+            <line x1="10" y1="60" x2="110" y2="60" stroke="#D4922A" stroke-width="1"/>
+            <line x1="60" y1="10" x2="60" y2="110" stroke="#D4922A" stroke-width="1"/>
+            <polygon points="60,15 100,85 20,85" stroke="#D4922A" stroke-width="1" fill="none"/>
+          </svg>
+          <span class="card-category">School Leadership</span>
+        </div>
+        <div class="card-body">
+          <p class="card-meta">May 2025 &nbsp;·&nbsp; 8 min read</p>
+          <h3 class="card-title">When the System Fails the Teacher: Rethinking Support in African Schools</h3>
+          <p class="card-excerpt">Teacher attrition is not simply a human resources problem — it is a systems failure. Drawing from my work in Zambia's South-East Cluster, this article examines what genuine instructional support looks like on the ground, and why top-down school reform rarely sticks without it.</p>
+          <a href="#" class="card-link">Read Article</a>
+        </div>
+      </div>
+
+      <!-- Article 2 -->
+      <div class="article-card reveal reveal-delay-1">
+        <div class="card-thumb" style="background: linear-gradient(150deg, #9E4A1E 0%, #D4922A 100%);">
+          <svg class="card-thumb-deco" width="80" height="80" viewBox="0 0 80 80" fill="none">
+            <rect x="8" y="8" width="64" height="64" stroke="#FDFAF4" stroke-width="1.5"/>
+            <rect x="20" y="20" width="40" height="40" stroke="#FDFAF4" stroke-width="1"/>
+            <circle cx="40" cy="40" r="10" stroke="#FDFAF4" stroke-width="1.5"/>
+          </svg>
+          <span class="card-category">Pedagogy</span>
+        </div>
+        <div class="card-body">
+          <p class="card-meta">April 2025 &nbsp;·&nbsp; 6 min read</p>
+          <h3 class="card-title">Art as a Learning Tool: What Cambridge Taught Me — and Africa Taught Me More</h3>
+          <p class="card-excerpt">Implementing the Cambridge curriculum in a Zambian classroom is a lesson in creative adaptation. Here's what I discovered about culturally responsive teaching and student meaning-making.</p>
+          <a href="#" class="card-link">Read Article</a>
+        </div>
+      </div>
+
+      <!-- Article 3 -->
+      <div class="article-card reveal reveal-delay-1">
+        <div class="card-thumb" style="background: linear-gradient(150deg, #3A5C32 0%, #1C0D05 100%);">
+          <svg class="card-thumb-deco" width="80" height="80" viewBox="0 0 80 80" fill="none">
+            <polygon points="40,8 72,65 8,65" stroke="#D4922A" stroke-width="1.5" fill="none"/>
+            <circle cx="40" cy="42" r="14" stroke="#C4622D" stroke-width="1"/>
+          </svg>
+          <span class="card-category">Research</span>
+        </div>
+        <div class="card-body">
+          <p class="card-meta">March 2025 &nbsp;·&nbsp; 5 min read</p>
+          <h3 class="card-title">Bridging Policy and Practice: Notes from the Cluster</h3>
+          <p class="card-excerpt">Policy documents are written in conference rooms. Education happens in classrooms with cracked walls and thirty-five students. This is a reflection on that gap — and how to close it sustainably.</p>
+          <a href="#" class="card-link">Read Article</a>
+        </div>
+      </div>
+
+      <!-- Article 4 -->
+      <div class="article-card reveal reveal-delay-2">
+        <div class="card-thumb" style="background: linear-gradient(150deg, #1C0D05 0%, #C4622D 100%);">
+          <svg class="card-thumb-deco" width="80" height="80" viewBox="0 0 80 80" fill="none">
+            <circle cx="40" cy="40" r="30" stroke="#FDFAF4" stroke-width="1.5"/>
+            <line x1="10" y1="40" x2="70" y2="40" stroke="#FDFAF4" stroke-width="1"/>
+            <circle cx="40" cy="40" r="10" stroke="#FDFAF4" stroke-width="1"/>
+          </svg>
+          <span class="card-category">Education Equity</span>
+        </div>
+        <div class="card-body">
+          <p class="card-meta">February 2025 &nbsp;·&nbsp; 7 min read</p>
+          <h3 class="card-title">Building School Systems That Outlast Any One Leader</h3>
+          <p class="card-excerpt">Sustainable school improvement isn't built on exceptional individuals — it's built on robust systems. What does that look like in practice in a PEAS secondary school?</p>
+          <a href="#" class="card-link">Read Article</a>
+        </div>
+      </div>
+
+      <!-- Article 5 -->
+      <div class="article-card reveal reveal-delay-2">
+        <div class="card-thumb" style="background: linear-gradient(150deg, #D4922A 0%, #3A5C32 100%);">
+          <svg class="card-thumb-deco" width="80" height="80" viewBox="0 0 80 80" fill="none">
+            <rect x="8" y="8" width="64" height="64" stroke="#FDFAF4" stroke-width="1.5" rx="0"/>
+            <line x1="8" y1="8" x2="72" y2="72" stroke="#FDFAF4" stroke-width="1"/>
+            <line x1="72" y1="8" x2="8" y2="72" stroke="#FDFAF4" stroke-width="1"/>
+            <circle cx="40" cy="40" r="12" stroke="#FDFAF4" stroke-width="1.5"/>
+          </svg>
+          <span class="card-category">AI in Education</span>
+        </div>
+        <div class="card-body">
+          <p class="card-meta">January 2025 &nbsp;·&nbsp; 6 min read</p>
+          <h3 class="card-title">Ethical AI Use in African Classrooms: A Practitioner's View</h3>
+          <p class="card-excerpt">AI is entering African schools whether we are ready or not. As educators, our job is not to fear it — it's to shape how it's used. Here's where I stand on that conversation.</p>
+          <a href="#" class="card-link">Read Article</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOPICS -->
+  <section id="topics">
+    <div class="reveal">
+      <p class="section-label">Topics I Cover</p>
+      <h2 class="section-title">What I <em>Write</em> About</h2>
+    </div>
+    <div class="topics-grid">
+      <div class="topic-card reveal">
+        <span class="topic-icon">🏫</span>
+        <p class="topic-name">School Systems Strengthening</p>
+        <p class="topic-desc">Building structures that sustain quality education beyond any one leader or teacher.</p>
+      </div>
+      <div class="topic-card reveal reveal-delay-1">
+        <span class="topic-icon">📚</span>
+        <p class="topic-name">Instructional Quality</p>
+        <p class="topic-desc">What great teaching looks like — and how to develop it at scale in under-resourced schools.</p>
+      </div>
+      <div class="topic-card reveal reveal-delay-2">
+        <span class="topic-icon">🔬</span>
+        <p class="topic-name">Education Research</p>
+        <p class="topic-desc">Evidence-based approaches, research methodology, and the craft of academic inquiry.</p>
+      </div>
+      <div class="topic-card reveal reveal-delay-3">
+        <span class="topic-icon">🎨</span>
+        <p class="topic-name">Creative Pedagogy</p>
+        <p class="topic-desc">Art, design, and creativity as powerful tools for deep learning and student expression.</p>
+      </div>
+      <div class="topic-card reveal">
+        <span class="topic-icon">🌍</span>
+        <p class="topic-name">Education Equity</p>
+        <p class="topic-desc">Access, inclusion, and justice in African education systems — policy to classroom.</p>
+      </div>
+      <div class="topic-card reveal reveal-delay-1">
+        <span class="topic-icon">🤝</span>
+        <p class="topic-name">Teacher Development</p>
+        <p class="topic-desc">Coaching, mentoring, and professional growth for educators in resource-constrained contexts.</p>
+      </div>
+      <div class="topic-card reveal reveal-delay-2">
+        <span class="topic-icon">📋</span>
+        <p class="topic-name">School Leadership</p>
+        <p class="topic-desc">Instructional leadership, school administration, and the art and science of headship.</p>
+      </div>
+      <div class="topic-card reveal reveal-delay-3">
+        <span class="topic-icon">💡</span>
+        <p class="topic-name">EdTech & Ethical AI</p>
+        <p class="topic-desc">Thoughtful, grounded integration of technology and AI into African education contexts.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESOURCES -->
+  <section id="resources">
+    <div class="resources-lead reveal">
+      <p class="section-label">Resources</p>
+      <h2 class="section-title">Field-Tested.<br><em>Classroom-Ready.</em></h2>
+      <p>Every resource on my Gumroad store comes from real work in real schools. These are tools I've built, refined, and used — not templates pulled from the internet. If it's here, it works.</p>
+    </div>
+
+    <div class="resources-grid">
+      <div class="resource-card reveal">
+        <p class="resource-type">📋 Observation Tool</p>
+        <h3 class="resource-title">Classroom Observation Checklist for Instructional Coaches</h3>
+        <p class="resource-desc">A structured instrument for capturing lesson quality, teacher-student interaction, and learning environment indicators during school visits and instructional rounds.</p>
+        <p class="resource-cta">Get on Gumroad</p>
+      </div>
+      <div class="resource-card reveal reveal-delay-1">
+        <p class="resource-type">📚 Lesson Framework</p>
+        <h3 class="resource-title">Cambridge Art & Design Unit Plans: African Context Edition</h3>
+        <p class="resource-desc">Culturally adapted unit plans for the Cambridge Art & Design curriculum — designed for African secondary classrooms with limited resources and maximum creativity.</p>
+        <p class="resource-cta">Get on Gumroad</p>
+      </div>
+      <div class="resource-card reveal reveal-delay-2">
+        <p class="resource-type">🔬 Research Guide</p>
+        <h3 class="resource-title">Action Research Starter Kit for School Leaders</h3>
+        <p class="resource-desc">A step-by-step guide for conducting action research in your school — from framing a question to analysing findings and driving sustainable, evidence-informed change.</p>
+        <p class="resource-cta">Get on Gumroad</p>
+      </div>
+    </div>
+
+    <div class="gumroad-banner reveal">
+      <p>"Every resource is built from the ground up — from African schools, for African schools."</p>
+      <a href="https://gumroad.com" target="_blank" class="btn-gumroad">Visit My Gumroad Store →</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-info reveal">
+      <p class="section-label">Get In Touch</p>
+      <h2 class="section-title">Let's <em>Connect</em></h2>
+      <p>Whether you're an educator, researcher, school leader, or organisation working in African education — I'd love to hear from you. Collaboration, speaking engagements, consulting, or just a good conversation about what's happening in our schools.</p>
+
+      <div class="contact-detail">
+        <span class="contact-detail-icon">📍</span>
+        <div class="contact-detail-text">
+          <div class="contact-detail-label">Location</div>
+          Lusaka, Zambia 🇿🇲
+        </div>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-icon">🏫</span>
+        <div class="contact-detail-text">
+          <div class="contact-detail-label">Organisation</div>
+          PEAS — Providing Equality in African Schools
+        </div>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-icon">🎓</span>
+        <div class="contact-detail-text">
+          <div class="contact-detail-label">Academic</div>
+          MEd Educational Research · TECH Global University<br>
+          MEd Administration & Management · UNICAF University
+        </div>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-icon">🛒</span>
+        <div class="contact-detail-text">
+          <div class="contact-detail-label">Resources</div>
+          <a href="https://gumroad.com" target="_blank" style="color: var(--terracotta); text-decoration: none;">Visit my Gumroad store →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="contact-form">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" placeholder="Full name" />
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="your@email.com" />
+        </div>
+        <div class="form-group">
+          <label>I'm reaching out about</label>
+          <select>
+            <option>Collaboration / Partnership</option>
+            <option>Speaking or Workshop</option>
+            <option>Consulting</option>
+            <option>Resources / Gumroad</option>
+            <option>Media or Interview</option>
+            <option>General Enquiry</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell me about your work and what you have in mind..."></textarea>
+        </div>
+        <button class="btn-submit" onclick="handleSubmit()">Send Message</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">
+      <div class="footer-name">Raising Scholars</div>
+      <div class="footer-sub">by Elliot Ngosa · Educator · Researcher · Lusaka, Zambia 🇿🇲</div>
+    </div>
+    <ul class="footer-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#articles">Articles</a></li>
+      <li><a href="#topics">Topics</a></li>
+      <li><a href="#resources">Resources</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="https://gumroad.com" target="_blank">Gumroad</a></li>
+    </ul>
+    <div class="footer-copy">© 2025 Raising Scholars · Elliot Ngosa. All rights reserved.</div>
+  </footer>
+
+  <script>
+    // Nav scroll behaviour
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Mobile nav toggle
+    function toggleMenu(el) {
+      const links = document.querySelector('.nav-links');
+      const isOpen = links.style.display === 'flex';
+      links.style.display = isOpen ? 'none' : 'flex';
+      links.style.position = 'fixed';
+      links.style.top = '60px';
+      links.style.left = '0';
+      links.style.right = '0';
+      links.style.flexDirection = 'column';
+      links.style.background = 'var(--espresso)';
+      links.style.padding = '2rem';
+      links.style.gap = '1.5rem';
+    }
+
+    // Contact form
+    function handleSubmit() {
+      const name = document.querySelector('input[type="text"]').value;
+      if (!name.trim()) { alert('Please enter your name.'); return; }
+      const btn = document.querySelector('.btn-submit');
+      btn.textContent = 'Message Sent ✓';
+      btn.style.background = 'var(--forest)';
+      btn.disabled = true;
+    }
+
+    // Smooth active nav
+    const sections = document.querySelectorAll('section[id]');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        const sectionHeight = section.offsetHeight;
+        const id = section.getAttribute('id');
+        const link = document.querySelector(`.nav-links a[href="#${id}"]`);
+        if (link) {
+          if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+            link.style.color = 'var(--ochre)';
+            link.style.opacity = '1';
+          } else {
+            link.style.color = '';
+            link.style.opacity = '';
+          }
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
